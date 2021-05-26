@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="RemoteMappingsManager">
+    <list>
+      <list>
+        <remote-mappings server-id="python@bc46d18e-c5c5-4df9-b7a5-5694f7f33884" />
+        <remote-mappings server-id="python@sftp://root@ai.danlu.netease.com:17151/project/miniconda3/envs/zc/bin/python3.6">
+          <settings>
+            <list>
+              <mapping local-root="$PROJECT_DIR$" remote-root="/project/zhaochuang/Pytorch_Template" />
+            </list>
+          </settings>
+        </remote-mappings>
+      </list>
+    </list>
+  </component>
+</project>
