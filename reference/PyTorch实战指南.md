@@ -67,6 +67,7 @@ id,label
 │   ├── Pytorch实战指南.md
 └── result/
 └── misconf/
+└── server/
 ├── config.py
 ├── main.py
 ├── requirements.txt
@@ -81,6 +82,7 @@ id,label
 - `logfile/`：存放日志文件及tensorboard记录
 - `result/`：存储必要的test结构及可视化图片
 - `misconf/`：存放部署的脚本文件
+- `server/`：存放flask模型部署配置及前后端代码
 - `utils/`：可能用到的工具函数，在本次实验中主要是封装了可视化工具
 - `config.py`：配置文件，所有可配置的变量都集中在此，并提供默认值
 - `main.py`：主文件，训练和测试程序的入口，可通过不同的命令来指定不同的操作和参数
