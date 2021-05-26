@@ -4,6 +4,7 @@ import torch.nn as nn
 import numpy as np
 import random
 import logging
+import csv
 
 def setup_seed(seed):
     '''
@@ -41,3 +42,12 @@ def get_logger(filename, verbosity=1, name=None):
     sh.setFormatter(formatter)
     logger.addHandler(sh)
     return logger
+
+
+
+def write_csv(results, file_name):
+    # 写入test数据方便后期debug
+    with open(file_name, 'w') as f:
+        writer = csv.writer(f)
+        writer.writerow(['id', 'label'])
+        writer.writerows(results)

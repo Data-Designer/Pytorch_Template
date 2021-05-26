@@ -17,26 +17,39 @@ pip install -r requirements.txt
 ### 训练
 
 使用如下命令启动训练：
-
+注意：也可以进入misconf，直接运行misconf目录下的run.sh文件
+```bash
+chmod +x run.sh
+./run.sh visual
+```
+或者
 ```
 # 在GPU上训练，model指定前需要在model/init文件中添加
 python main.py train --train-data-root=data/train --load-model-path=None --lr=0.005 --batch-size=32 --model='ResNet34' --max-epoch=20
 ```
-
-
 详细的使用命令 可使用
 ```bash
 python main.py help
 ```
 
 ### 测试
-
+注意：可以进入misconf，直接运行misconf目录下的run.sh文件
 ```bash
-python main.py --data-root=./data/test --use-gpu=False --batch-size=32
+chmod +x run.sh
+./run.sh test
+```
+或者
+```bash
+python main.py test --data-root=./data/test --use-gpu=False --batch-size=32
 ```
 
 ### 可视化
-
+注意：也可以进入misconf，直接运行misconf目录下的run.sh文件
+```bash
+chmod +x run.sh
+./run.sh visual
+```
+或者
 ```bash
 tensorboard --logdir ./logfile/runs --port 8889
 ```

@@ -13,7 +13,7 @@ from torch.utils.data import DataLoader
 from torch.autograd import Variable
 from inspect import getsource
 from tqdm import tqdm
-from utils.utils import setup_seed,initial_weight,get_logger # 这里引入工具函数
+from utils.utils import setup_seed,initial_weight,get_logger,write_csv # 这里引入工具函数
 from pytorch_lightning.metrics import Accuracy
 from torch.utils.tensorboard import SummaryWriter
 
@@ -31,7 +31,7 @@ def test(**kwargs):
     # test是没有label的
     logger.info("Start Testing...")
     opt.parse(kwargs) # 更新参数
-    ipdb.set_trace()
+    # ipdb.set_trace() # 取消调试
 
     # configure model
     model = getattr(models, opt.model)()
@@ -40,18 +40,18 @@ def test(**kwargs):
         model.load(opt.load_model_path)
     if opt.use_gpu: model.cuda()
 
-    # data，这里使用训练集测试了，原理上可以在训练集中继续划分
+    # data，测试卷数据，按理说是另一份数据【这里使用全量数据代替】
     train_data = DogCat(opt.test_data_root, test=True)
     test_dataloader = DataLoader(train_data, batch_size=opt.batch_size, shuffle=False, num_workers=opt.num_workers)
     results = []
     model.eval()
     with t.no_grad():
         for step, (data, path) in enumerate(test_dataloader):
-            input = Variable(data, volatile=True)
+            input = Variable(data)
             if opt.use_gpu:
                 input = input.cuda()
             score = model(input)
-            probability = t.nn.functional.softmax(score)[:, 0].data.tolist()
+            probability = t.nn.functional.softmax(score,dim=1)[:, 0].data.tolist()
 
             batch_results = [(path_, probability_) for path_, probability_ in zip(path, probability)]
 
@@ -61,12 +61,6 @@ def test(**kwargs):
     return results
 
 
-def write_csv(results, file_name):
-    # 写入test数据方便后期debug
-    with open(file_name, 'w') as f:
-        writer = csv.writer(f)
-        writer.writerow(['id', 'label'])
-        writer.writerows(results)
 
 
 def train_step(model,features,labels):
